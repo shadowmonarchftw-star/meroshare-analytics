@@ -1,0 +1,86 @@
+/* Sidebar Menu Item Styling */
+#ms-advanced-menu-item a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #aebbc9;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+#ms-advanced-menu-item a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+#ms-advanced-menu-item i {
+  margin-right: 15px;
+  width: 20px;
+  text-align: center;
+}
+
+#ms-advanced-menu-item.active {
+  background: #1a2a3a;
+  border-left: 4px solid #2ecc71;
+}
+
+/* Dashboard UI Styles */
+.ms-advanced-dashboard {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2c3e50;
+  min-height: 80vh;
+}
+
+.ms-advanced-dashboard h2 {
+  color: #34495e;
+  font-weight: 300;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s;
+}
+
+/* TMS Actions Styling */
+.tms-actions button {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.tms-actions button:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Summary Bar Styling */
+#ms-summary-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 15px 0;
+  padding: 15px;
+  background: #0f172a;
+  border-radius: 12px;
+  border: 1px solid #1e293b;
+  color: #f1f5f9;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+}

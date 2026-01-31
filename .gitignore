@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+*.zip
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Backup files
+*.bak
+*.backup
+icon-original.png
+
+# Claude/AI artifacts
+.claude/
+
+## Mac os
+Mero Share Integrated Stock Trackerpackage.sh
