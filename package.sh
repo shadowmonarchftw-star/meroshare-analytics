@@ -18,4 +18,4 @@ echo "Packaging Meroshare Analytics v$VERSION..."
 zip -r "$FILENAME" manifest.json background.js scripts/ styles/ assets/ -x "*.DS_Store*"
 
 echo "Successfully created $FILENAME"
-echo "You can now upload this file to the Firefox Add-on Developer Hub."
+echo "You can now upload this file to the Chrome Web Store or Firefox Add-on Developer Hub."

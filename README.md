@@ -118,6 +118,7 @@ We take your financial privacy seriously. Unlike many other trackers, this exten
 - **Safe Authentication**: Uses your existing Mero Share session—we never ask for or store your passwords.
 
 For more details, read our full [Privacy Policy](PRIVACY_POLICY.md).
+For Chrome submission prep, use the [Chrome Store Publishing Guide](CHROME_STORE_PUBLISHING.md).
 
 ---
 
