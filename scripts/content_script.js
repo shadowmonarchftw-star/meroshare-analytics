@@ -163,6 +163,18 @@ async function setUserStorage(data) {
     return chrome.storage.local.set(prefixed);
 }
 
+async function setUserScopedStorage(userKey, data) {
+    if (!userKey) return;
+
+    const prefixed = {};
+    for (const [key, val] of Object.entries(data)) {
+        prefixed[`${userKey}_${key}`] = val;
+    }
+
+    prefixed.activeUserKey = userKey;
+    return chrome.storage.local.set(prefixed);
+}
+
 
 function notifyActiveUser() {
     const userKey = getCurrentUserKey();
@@ -378,24 +390,29 @@ async function scrapeWACCTable() {
 
     if (!showAllSelected) {
         let pageCount = 1;
-        const maxPages = 10;
+        const maxPages = 250;
+        const getPageSignature = () => Array.from(table.querySelectorAll("tbody tr"))
+            .map(row => Array.from(row.querySelectorAll("td")).map(cell => cell.innerText?.trim() || '').join('|'))
+            .join('\n');
+        const seenPageSignatures = new Set([getPageSignature()]);
 
         while (pageCount < maxPages) {
-
             const nextBtn = findNextPageButton();
             if (!nextBtn) break;
 
             nextBtn.click();
             await new Promise(resolve => setTimeout(resolve, 600));
+
+            const pageSignature = getPageSignature();
+            if (!pageSignature || seenPageSignatures.has(pageSignature)) break;
+
+            seenPageSignatures.add(pageSignature);
             pageCount++;
-
-            const prevCount = Object.keys(waccMap).length;
             scrapeCurrentPage();
-            const newCount = Object.keys(waccMap).length;
+        }
 
-
-
-            if (newCount === prevCount) break;
+        if (pageCount === maxPages) {
+            console.warn("[MS Sync] WACC scrape hit pagination safety limit.");
         }
     }
 
@@ -495,13 +512,7 @@ async function attemptAutoFetchBOID() {
         if (dob) {
             console.log("[MS Sync] User DOB found:", dob);
             const userKey = getCurrentUserKey() || 'default';
-            await new Promise((resolve) => {
-                chrome.storage.local.get([userKey], (data) => {
-                    const userData = data[userKey] || {};
-                    userData.userDOB = dob;
-                    chrome.storage.local.set({ [userKey]: userData }, resolve);
-                });
-            });
+            await setUserScopedStorage(userKey, { userDOB: dob });
         }
 
         const returnedBoid = res.demat || res.boid || res.clientCode;
@@ -547,13 +558,7 @@ async function syncViaAPI() {
         if (dob) {
             console.log("[MS Sync] User DOB found:", dob);
             const dobUserKey = userKey || 'default';
-            await new Promise((resolve) => {
-                chrome.storage.local.get([dobUserKey], (data) => {
-                    const userData = data[dobUserKey] || {};
-                    userData.userDOB = dob;
-                    chrome.storage.local.set({ [dobUserKey]: userData }, resolve);
-                });
-            });
+            await setUserScopedStorage(dobUserKey, { userDOB: dob });
         } else {
             console.log("[MS Sync] No DOB found in ownDetail response");
         }
@@ -4778,6 +4783,4 @@ const mainLoop = setInterval(() => {
         }
     });
 }, 1000);
-
-
 

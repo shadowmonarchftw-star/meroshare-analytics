@@ -75,10 +75,9 @@
    ```bash
    git clone https://github.com/shadowmonarchftw-star/meroshare-analytics.git
    ```
-2. **Rename** `manifest_chrome.json` to `manifest.json` (replacing the existing one).
-3. Open Chrome and navigate to `chrome://extensions/`
-4. Enable "Developer mode" (toggle in top-right corner).
-5. Click "Load unpacked" and select the extension folder.
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable "Developer mode" (toggle in top-right corner).
+4. Click "Load unpacked" and select the extension folder.
 
 ---
 
