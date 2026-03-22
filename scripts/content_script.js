@@ -348,6 +348,23 @@ function scrapePortfolioTable() {
     return portfolio.length > 0 ? portfolio : null;
 }
 
+function normalizeSectorName(...sectorCandidates) {
+    for (const candidate of sectorCandidates) {
+        if (typeof candidate !== 'string') continue;
+        const cleaned = candidate.trim();
+        if (cleaned) return cleaned;
+    }
+    return 'Others';
+}
+
+function getStockSector(stock) {
+    return normalizeSectorName(
+        stock?.sector,
+        stock?.sectorName,
+        CONSTANTS.SECTORS[stock?.symbol]
+    );
+}
+
 
 async function scrapeWACCTable() {
     const table = document.querySelector("table");
@@ -588,7 +605,8 @@ async function syncViaAPI() {
         symbol: p.script,
         units: parseFloat(p.currentBalance),
         ltp: parseFloat(p.lastTransactionPrice),
-        value: parseFloat(p.valueOfLastTransPrice)
+        value: parseFloat(p.valueOfLastTransPrice),
+        sector: normalizeSectorName(p.sector, p.sectorName, p.companyType, CONSTANTS.SECTORS[p.script])
     }));
 
 
@@ -692,6 +710,7 @@ async function syncAllDataInstantly() {
                 units: item.units,
                 prevClose: item.prevClose,
                 ltp: item.ltp,
+                sector: getStockSector(item),
                 cost: cost,
                 investment: investment,
                 value: item.value,
@@ -830,7 +849,7 @@ function exportToPDF(stocks, totalValue, totalInvestment, totalPL, totalPLPercen
     const stockRows = stocks.map(s => {
         const returnAmt = s.value - s.investment;
         const returnPct = s.investment > 0 ? ((returnAmt / s.investment) * 100).toFixed(2) : 0;
-        const sector = CONSTANTS.SECTORS[s.symbol] || 'Others';
+        const sector = getStockSector(s);
 
         const maskNum = (val) => numbersHidden ? '••••' : val;
         const maskName = (val) => scripNamesHidden ? '••••' : val;
@@ -2332,7 +2351,7 @@ function showDashboard() {
 
         const sectorData = {};
         stocks.forEach(s => {
-            const sector = CONSTANTS.SECTORS[s.symbol] || 'Others';
+            const sector = getStockSector(s);
             if (!sectorData[sector]) {
                 sectorData[sector] = { value: 0, count: 0, investment: 0, profit: 0 };
             }
@@ -2495,7 +2514,7 @@ function showDashboard() {
             const returnBg = isProfit ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)';
 
 
-            const sector = CONSTANTS.SECTORS[s.symbol] || 'Others';
+            const sector = getStockSector(s);
             const sectorColor = CONSTANTS.SECTOR_COLORS[sector] || '#64748b';
 
 
@@ -4666,6 +4685,7 @@ async function autoSyncOnLogin() {
                 units: item.units,
                 prevClose: item.prevClose,
                 ltp: item.ltp,
+                sector: getStockSector(item),
                 cost: cost,
                 investment: investment,
                 value: item.value,
@@ -4783,4 +4803,3 @@ const mainLoop = setInterval(() => {
         }
     });
 }, 1000);
-
