@@ -113,7 +113,7 @@
 We take your financial privacy seriously. Unlike many other trackers, this extension is built on a **Zero-Server Architecture**:
 
 - **Local Storage**: Your portfolio, notes, and alerts stay **strictly on your computer**.
-- **No External Servers**: We have no database and no tracking services. Your data is never uploaded anywhere.
+- **No Publisher Backend**: We do not run our own database or analytics service for your portfolio data.
 - **Open Source**: Review the code for yourself on GitHub to see exactly how your data is handled.
 - **Safe Authentication**: Uses your existing Mero Share session—we never ask for or store your passwords.
 

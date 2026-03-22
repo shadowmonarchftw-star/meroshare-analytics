@@ -1,7 +1,7 @@
 # Privacy Policy
 
 **Mero Share Integrated Stock Tracker**  
-*Last Updated: January 23, 2026*
+*Last Updated: March 22, 2026*
 
 ---
 
@@ -11,18 +11,23 @@ Mero Share Integrated Stock Tracker ("the Extension") is designed with a **Priva
 
 ## 1. Data Collection & Transmission
 
-### ✅ Zero-Server Architecture
-The Extension **does not have a backend server**. We do not collect, store, or transmit your data to any external database owned by us or any third party.
+### ✅ No Publisher Backend
+The Extension **does not operate its own backend server or database**. We do not collect or store your portfolio data on infrastructure controlled by the publisher.
 
 ### ✅ Local Storage Only
-All your portfolio data, Weighted Average Cost (WACC) adjustments, notes, settings, and price alerts are stored strictly in your browser's `chrome.storage.local`. 
+All your portfolio data, Weighted Average Cost (WACC) adjustments, notes, settings, price alerts, and locally saved birth details are stored on your device using browser storage (`chrome.storage.local`) and limited page-local `localStorage` values used by the extension UI.
 - **Offline Access**: Your data is accessible even without an internet connection (though market updates require one).
 - **No Sync**: We do not use `chrome.storage.sync` to prevent your financial data from being uploaded to Google's servers.
 
 ### 🌐 Network Activity Transparency
-The Extension only makes the following network requests:
-1. **Mero Share Official API** (`webbackend.cdsc.com.np`): To fetch your portfolio data using your existing browser session. This stays between your browser and Mero Share.
-2. **Public Market Data** (Public JSON files): To fetch the Last Traded Price (LTP) of stocks for profit/loss calculations. This is a one-way download of public info and contains no user data.
+The Extension can make the following network requests:
+1. **Mero Share Official API** (`webbackend.cdsc.com.np`): To fetch your portfolio, purchase, and account details using your existing browser session.
+2. **Public Market Data Mirrors** (`fix-previous-ltp.vercel.app`, `fixes.netlify.app`, `fixes-5elg.onrender.com`): To download public Last Traded Price (LTP) data used for calculations and alerts.
+3. **ShareSansar** (`www.sharesansar.com`): To download public corporate-action pages used for dividend and rights-share tracking.
+4. **Google Fonts** (`fonts.googleapis.com`): To load dashboard fonts and icon fonts rendered in the injected interface.
+5. **External Link-outs Initiated by You** (`nepalstock.com.np` and other research links opened from the dashboard): These only open when you click them.
+
+These services may receive standard web-request metadata such as your IP address, browser user agent, and request timing. The extension is designed so that your locally stored notes, alerts, and portfolio history are not intentionally uploaded to those third-party services.
 
 ## 2. Information We Handle
 
@@ -32,6 +37,7 @@ The Extension only makes the following network requests:
 | WACC / Cost Data | Local Device | ❌ NO |
 | Price Alerts | Local Device | ❌ NO |
 | Personal Notes | Local Device | ❌ NO |
+| DOB / Birth Details Entered for Optional Features | Local Device | ❌ NO |
 | Credentials/Passwords | **NOT HANDLED** | ❌ NO |
 
 ## 3. Permissions Explained
@@ -40,17 +46,18 @@ The Extension only makes the following network requests:
 |------------|----------------|
 | `storage` | To save your settings and portfolio metrics on your hard drive. |
 | `alarms` | To run the background price checker (alerts) and performance snapshots. |
+| `notifications` | To show local desktop alerts for price targets and corporate actions. |
 | `host_permissions` | To read market data and interact with Mero Share while you are logged in. |
 
 ## 4. Your Control
 
 - **Export/Backup**: You can export your data to a JSON file at any time.
-- **Data Deletion**: Uninstalling the extension or clearing your browser "Site Data" for Mero Share will permanently delete all extension data from your machine.
+- **Data Deletion**: Uninstalling the extension removes extension-managed storage. Some optional UI values written into the Mero Share page's local storage can also be cleared by removing site data for `meroshare.cdsc.com.np`.
 
 ## 5. Security Measures
 
 - **Encryption**: We rely on the security of your OS and browser's local storage sandbox.
-- **HTTPS Only**: All communication (with Mero Share and Market Data providers) is forced over encrypted HTTPS.
+- **HTTPS Only**: All network requests used by the extension are made over HTTPS.
 
 ---
 
@@ -63,7 +70,7 @@ This privacy policy applies **ONLY** to the official version of the "Mero Share 
 
 ---
 
-## 5. Security Measures
+## 6. Additional Privacy Commitments
 
 ✅ **No Tracking Pixels**  
 ✅ **No Analytics Services**  
@@ -71,4 +78,3 @@ This privacy policy applies **ONLY** to the official version of the "Mero Share 
 ✅ **No Data Mining**
 
 If you have any security concerns, our source code is **Open Source** and available for audit at: [GitHub Repository](https://github.com/shadowmonarchftw-star/meroshare-analytics)
-
